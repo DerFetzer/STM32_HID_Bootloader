@@ -22,7 +22,7 @@ SRCS += $(C_SRCS)
 vpath %.c $(sort $(dir $(C_SRCS)))
 OBJS = $(addprefix $(BUILD_DIR)/,$(notdir $(C_SRCS:.c=.o)))
 
-CFLAGS += -mcpu=cortex-m3 -mthumb -Wall -Os
+CFLAGS += -mcpu=cortex-m3 -mthumb -Wall -Os -g
 CFLAGS += -std=gnu99
 CFLAGS += -fno-common -static
 CFLAGS += -specs=nano.specs -specs=nosys.specs
@@ -78,6 +78,7 @@ generic-pb7: $(SRCS) clean gccversion build_generic-pb7 copy_generic-pb7 info si
 generic-pb0: $(SRCS) clean gccversion build_generic-pb0 copy_generic-pb0 info size
 generic-pb12: $(SRCS) clean gccversion build_generic-pb12 copy_generic-pb12 info size
 mini-stm32v3: $(SRCS) clean gccversion build_mini-stm32v3 copy_mini-stm32v3 info size
+smartpad: $(SRCS) clean gccversion build_smartpad copy_smartpad info size
 
 build_maple-mini: TARGETFLAGS= -DTARGET_MAPLE_MINI
 build_maple-mini: LINKER_SCRIPT=STM32F103CBT6.ld
@@ -169,6 +170,13 @@ build_mini-stm32v3: $(BUILD_DIR)/$(TARGET).elf $(BUILD_DIR)/$(TARGET).bin
 copy_mini-stm32v3: $(BIN_DIR)
 	$(ECHO) "COPY    $(BIN_DIR)/hid_mini-stm32v3.bin"
 	$(Q)$(CP) $(BUILD_DIR)/$(TARGET).bin $(BIN_DIR)/hid_mini-stm32v3.bin
+
+build_smartpad: TARGETFLAGS= -DTARGET_SMARTPAD
+build_smartpad: LINKER_SCRIPT=STM32F103CBT6.ld
+build_smartpad: $(BUILD_DIR)/$(TARGET).elf $(BUILD_DIR)/$(TARGET).bin
+copy_smartpad: $(BIN_DIR)
+	$(ECHO) "COPY    $(BIN_DIR)/hid_smartpad.bin"
+	$(Q)$(CP) $(BUILD_DIR)/$(TARGET).bin $(BIN_DIR)/hid_smartpad.bin
   
 $(BUILD_DIR)/$(TARGET).elf: $(OBJS)
 	$(ECHO) "LD      $@"

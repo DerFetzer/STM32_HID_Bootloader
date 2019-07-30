@@ -133,7 +133,17 @@
 	#define DISC_MODE
 	#define DISC_HIGH		WRITE_REG(GPIOD->BSRR, GPIO_BSRR_BS2)
 	#define DISC_LOW		WRITE_REG(GPIOD->BRR, GPIO_BRR_BR2)
-  
+
+#elif defined TARGET_SMARTPAD
+	#define LED1_CLOCK		RCC_APB2ENR_IOPAEN
+	#define LED2_CLOCK		RCC_APB2ENR_IOPCEN
+
+	// USB pull-up
+	#define PA8_HIGH
+
+	// Col3 low
+	#define PB2_LOW
+
 #else
 	#error "No config for this target"
 #endif

@@ -48,4 +48,22 @@ void pins_init(void)
 	/* PB2 is already in FLOATING mode by default. */
 #endif
 
+#if defined PA8_HIGH
+
+	CLEAR_BIT(GPIOA->CRH, GPIO_CRH_CNF8_0);
+	CLEAR_BIT(GPIOA->CRH, GPIO_CRH_CNF8_1);
+	SET_BIT(GPIOA->CRH, GPIO_CRH_MODE8);
+	WRITE_REG(GPIOA->BSRR, GPIO_BSRR_BS8);
+
+#endif
+
+#if defined PB2_LOW
+
+	CLEAR_BIT(GPIOB->CRL, GPIO_CRL_CNF2_0);
+	CLEAR_BIT(GPIOB->CRL, GPIO_CRL_CNF2_1);
+	SET_BIT(GPIOB->CRL, GPIO_CRL_MODE2);
+	WRITE_REG(GPIOA->BRR, GPIO_BRR_BR2);
+
+#endif
+
 }

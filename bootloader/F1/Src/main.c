@@ -200,7 +200,11 @@ void Reset_Handler(void)
 	 * then enter HID bootloader...
 	 */
 	if ((magic_word == 0x424C) ||
+#if defined TARGET_SMARTPAD
+		READ_BIT(GPIOC->IDR, GPIO_IDR_IDR8) == 0 ||
+#else
 		READ_BIT(GPIOB->IDR, GPIO_IDR_IDR2) ||
+#endif
 		(check_user_code(USER_PROGRAM) == false)) {
 		if (magic_word == 0x424C) {
 
